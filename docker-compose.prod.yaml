@@ -1,0 +1,15 @@
+services:
+  backend:
+    build:
+      context: ./cmd/
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080
+    expose:
+      - 8080
+  nginx:
+    build:
+      context: .
+      dockerfile: ./nginx/Dockerfile
+    ports:
+      - 80:80

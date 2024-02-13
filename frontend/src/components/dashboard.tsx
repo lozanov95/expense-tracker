@@ -1,6 +1,7 @@
+import { FormEvent } from "react";
 import Row, { RowProps } from "./Row";
 import Form from "./form";
-import { InputWithLabel } from "./input";
+import { Input, InputWithLabel } from "./input";
 
 export default function Dashboard() {
     const exp: RowProps[] = Array(10)
@@ -11,10 +12,19 @@ export default function Dashboard() {
             value: 43.01
         })
 
+    function onSubmit(ev: FormEvent<HTMLFormElement>) {
+        ev.preventDefault()
+    }
+
     return (
-        <main className="pt-4">
-            <Form title="Add expenses" error="yes" message="yes">
+        <main className="pt-4 grid place-items-center gap-2">
+            <Form
+                title="Add expenses"
+                className="gap-2 flex flex-col"
+                onSubmit={onSubmit}
+            >
                 <InputWithLabel label="Name" value="test" />
+                <Input value="Submit" type="submit" />
             </Form>
             <div className="grid max-w-96 m-auto">
                 <div className="bg-blue-900 text-lg font-semibold text-white grid grid-cols-4 rounded-t">

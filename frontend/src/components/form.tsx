@@ -12,7 +12,13 @@ export type FormProps = {
 export default function Form({ children, className, onSubmit, title, message, error }: FormProps) {
 
     return (
-        <form className={className} onSubmit={onSubmit}>
+        <form
+            className={
+                ["w-96 flex flex-col gap-1 bg-slate-800 p-4 rounded", className]
+                    .join(" ")
+                    .trim()
+            }
+            onSubmit={onSubmit}>
             <OptionalMessage message={title} className="text-2xl py-2" />
             <OptionalMessage message={message} className="bg-red-600" />
             <OptionalMessage message={error} className="bg-blue-600" />

@@ -1,11 +1,15 @@
 export default function Nav() {
+    const loggedIn = false;
 
     return (
         <nav className="bg-slate-800 flex justify-around">
             <ul></ul>
             <ul className="flex gap-2">
-                <LinkItem href="#" label="Sign in" />
-                <LinkItem href="#" label="Sign out" />
+                {loggedIn ?
+                    <LinkItem href="#" label="Sign out" />
+                    :
+                    <LinkItem href="#" label="Sign in" />
+                }
             </ul>
         </nav>
     )

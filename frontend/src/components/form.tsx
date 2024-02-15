@@ -13,7 +13,7 @@ export default function Form({ children, className, onSubmit, title, message, er
 
     return (
         <form
-            className="w-96 flex flex-col gap-1 bg-slate-800 p-4 rounded items-center shadow shadow-slate-700"
+            className="lg:w-96 flex flex-col gap-1 bg-slate-800 p-4 rounded items-center shadow shadow-slate-700"
             onSubmit={onSubmit}
         >
             <OptionalMessage message={title} className="text-2xl py-2" />

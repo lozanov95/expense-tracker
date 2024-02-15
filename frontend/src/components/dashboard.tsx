@@ -1,4 +1,4 @@
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import Row, { RowProps } from "./Row";
 import Form from "./form";
 import { Input, InputWithLabel } from "./input";
@@ -12,20 +12,11 @@ export default function Dashboard() {
             value: 43.01
         })
 
-    function onSubmit(ev: FormEvent<HTMLFormElement>) {
-        ev.preventDefault()
-    }
+
 
     return (
         <main className="pt-4 grid place-items-center gap-2">
-            <Form
-                title="Add expenses"
-                className="gap-2 flex flex-col"
-                onSubmit={onSubmit}
-            >
-                <InputWithLabel label="Name" value="test" />
-                <Input value="Submit" type="submit" />
-            </Form>
+            <AddExpense />
             <div className="grid max-w-96 m-auto">
                 <div className="bg-blue-900 text-lg font-semibold text-white grid grid-cols-4 rounded-t">
                     <div>Date</div>
@@ -46,5 +37,31 @@ export default function Dashboard() {
                 </div>
             </div>
         </main>
+    )
+}
+
+
+function AddExpense() {
+    const [date, setDate] = useState(new Date().toString())
+
+
+    function onSubmit(ev: FormEvent<HTMLFormElement>) {
+        ev.preventDefault()
+    }
+
+    return (
+        <Form
+            title="Add expenses"
+            className="gap-2 flex flex-col"
+            onSubmit={onSubmit}
+        >
+            <InputWithLabel label="Name" value="test" />
+            <InputWithLabel
+                label="Date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                type="date" />
+            <Input value="Submit" type="submit" />
+        </Form>
     )
 }

@@ -1,32 +1,24 @@
-import { ChangeEventHandler, HTMLInputTypeAttribute } from "react"
+import { InputHTMLAttributes } from "react"
 
-export type InputProps = {
-    value: string | number
-    type?: HTMLInputTypeAttribute
-    onChange?: ChangeEventHandler<HTMLInputElement>
-}
-
-export type InputWithLabelProps = InputProps & {
+export type InputWithLabelProps = InputHTMLAttributes<HTMLInputElement> & {
     label: string
 }
 
-export function InputWithLabel({ label, value, type, onChange }: InputWithLabelProps) {
+export function InputWithLabel(props: InputWithLabelProps) {
 
     return (
-        <label className="flex gap-2"> {label}
-            <Input value={value} type={type} onChange={onChange} />
+        <label className="grid justify-items-start gap-1 font-semibold"> {props.label}
+            <Input {...props} />
         </label>
     )
 }
 
-export function Input({ value, type, onChange }: InputProps) {
+export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
 
     return (
         <input
-            className="rounded bg-slate-600 px-1"
-            value={value}
-            type={type}
-            onChange={onChange}
+            className="rounded bg-slate-600 px-1 py-0.5"
+            {...props}
         />
     )
 }

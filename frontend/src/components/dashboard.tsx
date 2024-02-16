@@ -43,7 +43,7 @@ export default function Dashboard() {
 
 function AddExpense() {
     const [date, setDate] = useState(new Date().toString())
-
+    const [name, setName] = useState("")
 
     function onSubmit(ev: FormEvent<HTMLFormElement>) {
         ev.preventDefault()
@@ -52,10 +52,14 @@ function AddExpense() {
     return (
         <Form
             title="Add expenses"
-            className="gap-2 flex flex-col"
+            className="grid gap-2"
             onSubmit={onSubmit}
         >
-            <InputWithLabel label="Name" value="test" />
+            <InputWithLabel label="Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Name of the expense"
+            />
             <InputWithLabel
                 label="Date"
                 value={date}

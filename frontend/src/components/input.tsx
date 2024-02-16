@@ -17,7 +17,7 @@ export function Input(props: InputHTMLAttributes<HTMLInputElement>) {
 
     return (
         <input
-            className="rounded bg-slate-600 px-1 py-0.5"
+            className={props.className ?? "rounded bg-slate-600 px-1 py-0.5"}
             {...props}
         />
     )

@@ -1,19 +1,18 @@
-import { FormEvent, useState } from "react";
-import Row, { RowProps } from "./Row";
+import { ChangeEvent, FormEvent, useState } from "react";
+import Row from "./Row";
 import Form from "./form";
 import { Input, InputWithLabel } from "./input";
+import { Expense } from "../lib/expense";
+
 
 export default function Dashboard() {
-    const exp: RowProps[] = Array(10)
+    const exp: Expense[] = Array(10)
         .fill({
             category: "Food",
             date: "2024-01-01",
             name: "Happy",
             value: 43.01
         })
-
-
-
     return (
         <main className="pt-4 grid place-items-center gap-2">
             <AddExpense />
@@ -42,11 +41,32 @@ export default function Dashboard() {
 
 
 function AddExpense() {
-    const [date, setDate] = useState(new Date().toString())
-    const [name, setName] = useState("")
+    const [formError, setFormError] = useState("")
+    const [formMessage, setFormMessage] = useState("")
+    const [formData, setFormData] = useState<Expense>({
+        name: "",
+        date: new Date().toString(),
+        category: "",
+        value: 0
+    })
+
+
+    function handleFormUpdate(event: ChangeEvent<HTMLInputElement>) {
+        setFormData((data) => { return { ...data, [event.target.name]: event.target.value } })
+    }
 
     function onSubmit(ev: FormEvent<HTMLFormElement>) {
         ev.preventDefault()
+
+        setFormData({
+            name: "",
+            date: new Date().toString(),
+            category: "",
+            value: 0
+        })
+
+        setFormMessage("The expense was added.")
+        setFormError("")
     }
 
     return (
@@ -54,17 +74,41 @@ function AddExpense() {
             title="Add expenses"
             className="grid gap-2"
             onSubmit={onSubmit}
+            error={formError}
+            message={formMessage}
         >
             <InputWithLabel label="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={formData?.name}
+                name="name"
+                onChange={handleFormUpdate}
                 placeholder="Name of the expense"
+                required
             />
             <InputWithLabel
+                value={formData.date}
+                onChange={handleFormUpdate}
                 label="Date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
-                type="date" />
+                name="date"
+                type="date"
+                required
+            />
+            <InputWithLabel
+                value={formData.category}
+                label="Category"
+                name="category"
+                onChange={handleFormUpdate}
+                required
+            />
+            <InputWithLabel
+                value={formData.value}
+                label="Price"
+                name="value"
+                onChange={handleFormUpdate}
+                type="number"
+                step={0.01}
+                min={0.01}
+                required
+            />
             <Input value="Submit" type="submit" />
         </Form>
     )

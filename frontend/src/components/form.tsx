@@ -17,8 +17,8 @@ export default function Form({ children, className, onSubmit, title, message, er
             onSubmit={onSubmit}
         >
             <OptionalMessage message={title} className="text-2xl py-2" />
-            <OptionalMessage message={message} className="bg-red-600" />
-            <OptionalMessage message={error} className="bg-blue-600" />
+            <OptionalMessage message={error} className="bg-red-600 px-2 py-1 rounded" />
+            <OptionalMessage message={message} className="bg-blue-600 px-2 py-1 rounded" />
             <div className={className}>
                 {children}
             </div>

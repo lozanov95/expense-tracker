@@ -1,6 +1,6 @@
 export type Expense = {
   name: string;
-  value: number;
+  value?: number;
   date: string;
   category: string;
 };

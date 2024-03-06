@@ -45,40 +45,48 @@ function AddExpense() {
     const [formMessage, setFormMessage] = useState("")
     const [formData, setFormData] = useState<Expense>({
         name: "",
-        date: new Date().toString(),
+        date: new Date().toISOString(),
         category: "",
-        value: 0
     })
-
 
     function handleFormUpdate(event: ChangeEvent<HTMLInputElement>) {
         setFormData((data) => { return { ...data, [event.target.name]: event.target.value } })
     }
 
-    function onSubmit(ev: FormEvent<HTMLFormElement>) {
+    async function onSubmit(ev: FormEvent<HTMLFormElement>) {
         ev.preventDefault()
+
+        await fetch("http://localhost:8081/expense",
+            {
+                method: "post",
+                body: JSON.stringify({
+                    ...formData,
+                    date: new Date(formData.date).toISOString(),
+                    value: Number(formData.value)
+                }),
+            }
+        )
 
         setFormData({
             name: "",
-            date: new Date().toString(),
+            date: new Date().toISOString(),
             category: "",
-            value: 0
         })
 
-        setFormMessage("The expense was added.")
+        setFormMessage(`The ${formData.name} expense was added.`)
         setFormError("")
     }
 
     return (
         <Form
-            title="Add expenses"
+            title="Add expense"
             className="grid gap-2"
             onSubmit={onSubmit}
             error={formError}
             message={formMessage}
         >
             <InputWithLabel label="Name"
-                value={formData?.name}
+                value={formData.name}
                 name="name"
                 onChange={handleFormUpdate}
                 placeholder="Name of the expense"
@@ -100,7 +108,7 @@ function AddExpense() {
                 required
             />
             <InputWithLabel
-                value={formData.value}
+                value={formData.value ?? ""}
                 label="Price"
                 name="value"
                 onChange={handleFormUpdate}
